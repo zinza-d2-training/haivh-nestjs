@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { User } from 'src/typeorm/User';
+import { User } from 'src/typeorm/entity/user.entity';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
 import { Repository } from 'typeorm';
 
@@ -31,7 +31,7 @@ export class UsersService {
 
   async update(id: number, data: Partial<CreateUserDto>) {
     await this.userRepository.update({ id }, data);
-    return this.userRepository.findBy({ id });
+    return this.userRepository.find({ id });
   }
 
   async delete(id: number) {
