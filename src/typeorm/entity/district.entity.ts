@@ -1,6 +1,7 @@
 import {
   Column,
   Entity,
+  JoinColumn,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
@@ -8,7 +9,7 @@ import {
 import { Province } from './province.entity';
 import { Ward } from './ward.entity';
 
-@Entity()
+@Entity('districts')
 export class District {
   @PrimaryGeneratedColumn()
   id: number;
@@ -31,9 +32,13 @@ export class District {
   })
   delete_at: Date;
 
+  @Column()
+  province_id: number;
+
   @ManyToOne(() => Province, (province) => province.districts, {
     onDelete: 'SET NULL',
   })
+  @JoinColumn({ name: 'province_id' })
   province: Province;
 
   @OneToMany(() => Ward, (ward) => ward.district)

@@ -1,4 +1,5 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
+import entities from './entity';
 
 const config: TypeOrmModuleOptions = {
   type: 'mysql',
@@ -12,7 +13,7 @@ const config: TypeOrmModuleOptions = {
   logger: 'advanced-console',
   autoLoadEntities: true,
   migrations: [__dirname + '/migrations/**/*{.ts,.js}'],
-  entities: [__dirname + '/entity/**/*{.ts,.js}'],
+  entities: [entities],
   cli: {
     migrationsDir: 'src/typeorm/migrations',
   },

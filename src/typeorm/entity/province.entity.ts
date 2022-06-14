@@ -1,7 +1,7 @@
 import { District } from './district.entity';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity()
+@Entity('provinces')
 export class Province {
   @PrimaryGeneratedColumn()
   id: number;

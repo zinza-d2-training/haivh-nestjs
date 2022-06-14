@@ -6,10 +6,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Ward } from './ward.entity';
-import { Role } from './role.entity';
-import { VaccineRegistration } from './vaccine-registration.entity';
-
-@Entity()
+@Entity('users')
 export class User {
   @PrimaryGeneratedColumn()
   id: number;
@@ -51,15 +48,4 @@ export class User {
     onDelete: 'SET NULL',
   })
   ward: Ward;
-
-  @ManyToOne(() => Role, (ward) => ward.users, {
-    onDelete: 'SET NULL',
-  })
-  role: Role;
-
-  @OneToMany(
-    () => VaccineRegistration,
-    (vaccineRegistration) => vaccineRegistration.user,
-  )
-  vaccineRegistrations: VaccineRegistration[];
 }

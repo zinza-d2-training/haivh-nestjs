@@ -1,15 +1,15 @@
 import {
   Column,
   Entity,
+  JoinColumn,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { District } from './district.entity';
-import { InjectionSite } from './injection-site.entity';
 import { User } from './user.entity';
 
-@Entity()
+@Entity('wards')
 export class Ward {
   @PrimaryGeneratedColumn()
   id: number;
@@ -32,14 +32,15 @@ export class Ward {
   })
   delete_at: Date;
 
+  @Column()
+  district_id: number;
+
   @ManyToOne(() => District, (district) => district.wards, {
     onDelete: 'SET NULL',
   })
+  @JoinColumn({ name: 'district_id' })
   district: District;
 
   @OneToMany(() => User, (user) => user.ward)
   users: User[];
-
-  @OneToMany(() => InjectionSite, (injectionSite) => injectionSite.ward)
-  injectionSites: InjectionSite[];
 }
