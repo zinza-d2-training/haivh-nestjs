@@ -1,23 +1,21 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
-import entities from './typeorm';
+import { ConfigModule } from '@nestjs/config';
+import { TypeormModule } from './typeorm/typeorm.module';
+import { AdministrativeUnitModule } from './administrative_unit/administrative_unit.module';
+import { ConsoleModule } from '@squareboat/nest-console';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: 'mysql',
-      host: 'localhost',
-      port: 3306,
-      username: 'root',
-      password: '123456',
-      database: 'covid19_clone_db',
-      entities: entities,
-      synchronize: true,
+    ConfigModule.forRoot({
+      isGlobal: true,
     }),
+    ConsoleModule,
+    TypeormModule.forRoot(),
     UsersModule,
+    AdministrativeUnitModule,
   ],
   controllers: [AppController],
   providers: [AppService],
