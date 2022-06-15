@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Command, _cli } from '@squareboat/nest-console';
-import { District } from 'src/typeorm/entity/district.entity';
-import { Province } from 'src/typeorm/entity/province.entity';
-import { Ward } from 'src/typeorm/entity/ward.entity';
+import { District } from 'src/typeorm/entities/district.entity';
+import { Province } from 'src/typeorm/entities/province.entity';
+import { Ward } from 'src/typeorm/entities/ward.entity';
 import { Repository } from 'typeorm';
 import * as XLSX from 'xlsx';
 
