@@ -72,6 +72,5 @@ export class AdministrativeUnitService {
       }
     }
     await this.wardRepository.insert(wards);
-    return;
   }
 }
