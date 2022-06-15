@@ -36,7 +36,7 @@ export class District {
   province_id: number;
 
   @ManyToOne(() => Province, (province) => province.districts, {
-    onDelete: 'SET NULL',
+    onDelete: 'CASCADE',
   })
   @JoinColumn({ name: 'province_id' })
   province: Province;

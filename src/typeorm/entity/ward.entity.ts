@@ -36,7 +36,7 @@ export class Ward {
   district_id: number;
 
   @ManyToOne(() => District, (district) => district.wards, {
-    onDelete: 'SET NULL',
+    onDelete: 'CASCADE',
   })
   @JoinColumn({ name: 'district_id' })
   district: District;
