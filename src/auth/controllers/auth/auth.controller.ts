@@ -2,12 +2,15 @@ import {
   Body,
   Controller,
   Get,
+  Param,
+  ParseIntPipe,
   Post,
   Request,
   UseGuards,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { RegisterUserDto } from 'src/auth/dto/register-user.dto';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { AuthService } from 'src/auth/services/auth/auth.service';
 
 @Controller('auth')
@@ -28,5 +31,11 @@ export class AuthController {
   @Get('logout')
   async logout() {
     return this.authService.logout();
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('/info/:id')
+  async getUserInfo(@Param('id', ParseIntPipe) id: number) {
+    return await this.authService.getUserInfoById(id);
   }
 }

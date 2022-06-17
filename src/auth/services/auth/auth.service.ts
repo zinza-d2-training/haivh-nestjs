@@ -4,7 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/typeorm/entities/user.entity';
 import { Repository } from 'typeorm';
 import { ComparePassword, EnCodePassword } from 'src/auth/bcrypt';
-import { UserLogin } from 'src/auth/types/user-login.inteface';
+import { UserLogin } from 'src/auth/types/user-login.interface';
 import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
@@ -27,7 +27,7 @@ export class AuthService {
   }
 
   async login(user: UserLogin) {
-    const payload = { email: user.email, password: user.password };
+    const payload = { email: user.email, id: user.id };
     return {
       access_token: this.jwtService.sign(payload),
     };
@@ -35,7 +35,7 @@ export class AuthService {
 
   async register(registerUserDto: RegisterUserDto) {
     const password = EnCodePassword(registerUserDto.password);
-    return this.userRepository.save({ ...registerUserDto, password });
+    return await this.userRepository.save({ ...registerUserDto, password });
   }
 
   logout() {
@@ -43,5 +43,9 @@ export class AuthService {
       status: '200',
       message: 'Logout successful',
     };
+  }
+
+  async getUserInfoById(id: number) {
+    return await this.userRepository.findOne({ id });
   }
 }
