@@ -1,10 +1,11 @@
 import {
   Column,
   Entity,
+  JoinColumn,
   ManyToOne,
-  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { Role } from './role.entity';
 import { Ward } from './ward.entity';
 @Entity('users')
 export class User {
@@ -23,11 +24,17 @@ export class User {
   @Column()
   gender: string;
 
-  @Column()
+  @Column({ unique: true })
   identity_card: string;
 
   @Column()
   password: string;
+
+  @Column()
+  ward_id: number;
+
+  @Column()
+  role_id: number;
 
   @Column({
     type: 'timestamp',
@@ -45,7 +52,14 @@ export class User {
   delete_at: Date;
 
   @ManyToOne(() => Ward, (ward) => ward.users, {
-    onDelete: 'SET NULL',
+    onDelete: 'CASCADE',
   })
+  @JoinColumn({ name: 'ward_id' })
   ward: Ward;
+
+  @ManyToOne(() => Role, (role) => role.users, {
+    onDelete: 'CASCADE',
+  })
+  @JoinColumn({ name: 'role_id' })
+  role: Role;
 }

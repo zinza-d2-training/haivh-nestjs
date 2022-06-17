@@ -6,6 +6,7 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeormModule } from './typeorm/typeorm.module';
 import { AdministrativeUnitModule } from './administrative_unit/administrative_unit.module';
 import { ConsoleModule } from '@squareboat/nest-console';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { ConsoleModule } from '@squareboat/nest-console';
     TypeormModule.forRoot(),
     UsersModule,
     AdministrativeUnitModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
