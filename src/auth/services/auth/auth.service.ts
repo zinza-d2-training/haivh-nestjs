@@ -20,7 +20,6 @@ export class AuthService {
     if (user) {
       const match = ComparePassword(password, user.password);
       if (match) {
-        console.log(user);
         return user;
       }
     }
