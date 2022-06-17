@@ -15,27 +15,31 @@ export class UsersService {
     return this.userRepository.find();
   }
 
-  async getById(id: number) {
-    const user = await this.userRepository.findOne({ where: { id } });
-    if (user) {
-      return user;
-    } else {
-      throw new HttpException('User not found', HttpStatus.BAD_REQUEST);
-    }
-  }
+  // findUserByEmail(email: string) {
+  //   return this.userRepository.findOne({ email });
+  // }
 
-  async create(createUserDto: CreateUserDto) {
-    const newUser = this.userRepository.create(createUserDto);
-    return await this.userRepository.save(newUser);
-  }
+  // async getById(id: number) {
+  //   const user = await this.userRepository.findOne({ where: { id } });
+  //   if (user) {
+  //     return user;
+  //   } else {
+  //     throw new HttpException('User not found', HttpStatus.BAD_REQUEST);
+  //   }
+  // }
 
-  async update(id: number, data: Partial<CreateUserDto>) {
-    await this.userRepository.update({ id }, data);
-    return this.userRepository.find({ id });
-  }
+  // async create(createUserDto: CreateUserDto) {
+  //   const newUser = this.userRepository.create(createUserDto);
+  //   return await this.userRepository.save(newUser);
+  // }
 
-  async delete(id: number) {
-    await this.userRepository.delete({ id });
-    return await this.userRepository.find();
-  }
+  // async update(id: number, data: Partial<CreateUserDto>) {
+  //   await this.userRepository.update({ id }, data);
+  //   return this.userRepository.find({ id });
+  // }
+
+  // async delete(id: number) {
+  //   await this.userRepository.delete({ id });
+  //   return await this.userRepository.find();
+  // }
 }

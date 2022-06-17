@@ -1,6 +1,5 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import * as dotenv from 'dotenv';
-import entities from './entities';
 
 dotenv.config();
 
@@ -16,7 +15,7 @@ const config: TypeOrmModuleOptions = {
   logger: 'advanced-console',
   autoLoadEntities: true,
   migrations: [__dirname + '/migrations/**/*{.ts,.js}'],
-  entities: [entities],
+  entities: [__dirname + '/entities/**/*{.ts,.js}'],
   cli: {
     migrationsDir: 'src/typeorm/migrations',
   },
