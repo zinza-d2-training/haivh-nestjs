@@ -3,7 +3,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/typeorm/entities/user.entity';
 import { Repository } from 'typeorm';
-import { ComparePassword, EnCodePassword } from 'src/auth/bcrypt';
+import { comparePassword, encodePassword } from 'src/auth/bcrypt';
 import { UserLogin } from 'src/auth/types/user-login.interface';
 import { JwtService } from '@nestjs/jwt';
 
@@ -18,7 +18,7 @@ export class AuthService {
   async validateUser(email: string, password: string) {
     const user = await this.userRepository.findOne({ email });
     if (user) {
-      const match = ComparePassword(password, user.password);
+      const match = comparePassword(password, user.password);
       if (match) {
         return user;
       }
@@ -34,7 +34,7 @@ export class AuthService {
   }
 
   async register(registerUserDto: RegisterUserDto) {
-    const password = EnCodePassword(registerUserDto.password);
+    const password = encodePassword(registerUserDto.password);
     return await this.userRepository.save({ ...registerUserDto, password });
   }
 
