@@ -5,6 +5,7 @@ import {
   IsNotEmpty,
   IsNumber,
   MaxLength,
+  Min,
   MinLength,
 } from 'class-validator';
 
@@ -41,5 +42,6 @@ export class RegisterUserDto {
 
   @IsNotEmpty({ message: 'Ward Id can not be blank' })
   @IsNumber()
+  @Min(1)
   ward_id: number;
 }
