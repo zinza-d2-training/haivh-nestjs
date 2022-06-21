@@ -1,4 +1,6 @@
+import { Type } from 'class-transformer';
 import {
+  IsDate,
   IsEmail,
   IsEnum,
   IsISO8601,
@@ -8,6 +10,7 @@ import {
   Min,
   MinLength,
 } from 'class-validator';
+import { CheckLength } from './check-length.dto';
 
 enum GenderType {
   MALE = 'nam',
@@ -16,6 +19,7 @@ enum GenderType {
 
 export class RegisterUserDto {
   @IsNotEmpty({ message: 'Identity Card can not be blank' })
+  @CheckLength({ message: 'Identity Card Number must equal 9 or equal 12' })
   identity_card: string;
 
   @IsNotEmpty({ message: 'Email can not be blank' })
@@ -32,8 +36,9 @@ export class RegisterUserDto {
   @MaxLength(45)
   name: string;
 
-  @IsNotEmpty({ message: 'DoB can not be blank' })
-  @IsISO8601()
+  @Type(() => Date)
+  @IsDate({ message: 'dob must be of type mm/dd/yyyy' })
+  @IsNotEmpty({ message: 'Birthday cannot be left blank' })
   dob: Date;
 
   @IsNotEmpty({ message: 'Gender can not be blank' })
