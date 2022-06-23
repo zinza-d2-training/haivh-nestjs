@@ -37,8 +37,8 @@ export class AuthService {
   }
 
   async register(registerUserDto: RegisterUserDto) {
-    const { email } = registerUserDto;
-    const identityCard = this.userRepository.findOne(email);
+    const { identity_card } = registerUserDto;
+    const identityCard = await this.userRepository.findOne({ identity_card });
     if (!identityCard) {
       const password = encodePassword(registerUserDto.password);
       return await this.userRepository.save({ ...registerUserDto, password });
