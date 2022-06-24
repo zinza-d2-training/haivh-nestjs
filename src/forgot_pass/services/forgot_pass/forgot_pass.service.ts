@@ -56,6 +56,10 @@ export class ForgotPassService {
           ...userHaveToken,
           password: hashNewPassword,
         });
+        return {
+          password: newPassword,
+          message: 'Reset password success',
+        };
       } catch (error) {
         return error;
       }
