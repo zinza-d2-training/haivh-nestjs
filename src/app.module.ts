@@ -7,6 +7,7 @@ import { TypeormModule } from './typeorm/typeorm.module';
 import { AdministrativeUnitModule } from './administrative_unit/administrative_unit.module';
 import { ConsoleModule } from '@squareboat/nest-console';
 import { AuthModule } from './auth/auth.module';
+import { SubdivisionsModule } from './subdivisions/subdivisions.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { AuthModule } from './auth/auth.module';
     UsersModule,
     AdministrativeUnitModule,
     AuthModule,
+    SubdivisionsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
