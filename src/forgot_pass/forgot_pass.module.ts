@@ -1,7 +1,9 @@
 import { MailerModule } from '@nestjs-modules/mailer';
 import { Module } from '@nestjs/common';
+import { JwtModule } from '@nestjs/jwt';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import * as dotenv from 'dotenv';
+import { jwtConstants } from 'src/auth/constants';
 import { User } from 'src/typeorm/entities/user.entity';
 
 import { ForgotPassController } from './controllers/forgot_pass/forgot_pass.controller';
@@ -25,6 +27,11 @@ dotenv.config();
       },
     }),
     TypeOrmModule.forFeature([User]),
+    JwtModule.register({
+      secret: jwtConstants.secret,
+      signOptions: { expiresIn: '60s' },
+      verifyOptions: { ignoreExpiration: false },
+    }),
   ],
   controllers: [ForgotPassController],
   providers: [ForgotPassService],
