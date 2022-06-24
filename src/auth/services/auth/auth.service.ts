@@ -1,5 +1,5 @@
 import { RegisterUserDto } from './../../dto/register-user.dto';
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/typeorm/entities/user.entity';
 import { Repository } from 'typeorm';
@@ -28,14 +28,23 @@ export class AuthService {
 
   async login(user: UserLogin) {
     const payload = { email: user.email, id: user.id };
+    const access_token = this.jwtService.sign(payload);
+    const { password, ...userInfo } = user;
     return {
-      access_token: this.jwtService.sign(payload),
+      user: userInfo,
+      access_token,
     };
   }
 
   async register(registerUserDto: RegisterUserDto) {
-    const password = encodePassword(registerUserDto.password);
-    return await this.userRepository.save({ ...registerUserDto, password });
+    const { identity_card } = registerUserDto;
+    const identityCard = await this.userRepository.findOne({ identity_card });
+    if (!identityCard) {
+      const password = encodePassword(registerUserDto.password);
+      return await this.userRepository.save({ ...registerUserDto, password });
+    } else {
+      throw new HttpException('Số CMND/CCCD đã tồn tại', 442);
+    }
   }
 
   logout() {
