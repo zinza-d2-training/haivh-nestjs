@@ -31,6 +31,9 @@ export class User {
   password: string;
 
   @Column()
+  reset_pass_token: string;
+
+  @Column()
   ward_id: number;
 
   @Column()
