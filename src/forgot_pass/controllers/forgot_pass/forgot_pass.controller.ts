@@ -10,7 +10,7 @@ import {
 import { UserEmailDto } from 'src/forgot_pass/dto/user-email.dto';
 import { ForgotPassService } from 'src/forgot_pass/services/forgot_pass/forgot_pass.service';
 
-@Controller('/forgot-pass')
+@Controller('/forgot-password')
 export class ForgotPassController {
   constructor(private forgotPasswordService: ForgotPassService) {}
 
