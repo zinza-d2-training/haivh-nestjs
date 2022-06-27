@@ -28,7 +28,7 @@ export class ForgotPassService {
         ...user,
         reset_pass_token: token,
       });
-      const link = `http://localhost:5000/api/forgot-pass/reset?token=${token}`;
+      const link = `${process.env.FORGOT_PASSWORD_API}${token}`;
       await this.mailerService.sendMail({
         to: 'vhh291200@gmail.com',
         from: process.env.MAIL_AUTH_EMAIL,
