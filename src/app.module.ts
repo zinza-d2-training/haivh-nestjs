@@ -8,6 +8,7 @@ import { AdministrativeUnitModule } from './administrative_unit/administrative_u
 import { ConsoleModule } from '@squareboat/nest-console';
 import { AuthModule } from './auth/auth.module';
 import { SubdivisionsModule } from './subdivisions/subdivisions.module';
+import { ForgotPassModule } from './forgot_pass/forgot_pass.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { SubdivisionsModule } from './subdivisions/subdivisions.module';
     AdministrativeUnitModule,
     AuthModule,
     SubdivisionsModule,
+    ForgotPassModule,
   ],
   controllers: [AppController],
   providers: [AppService],
