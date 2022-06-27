@@ -59,6 +59,7 @@ export class user1655265973005 implements MigrationInterface {
           {
             name: 'reset_pass_token',
             type: 'varchar',
+            length: '255',
             default: "'reset pass token'",
           },
           {
