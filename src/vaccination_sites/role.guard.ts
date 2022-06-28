@@ -1,6 +1,11 @@
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { Observable } from 'rxjs';
 
+export enum RoleID {
+  Admin = 1,
+  User = 2,
+}
+
 @Injectable()
 export class RoleGuard implements CanActivate {
   canActivate(
@@ -8,7 +13,7 @@ export class RoleGuard implements CanActivate {
   ): boolean | Promise<boolean> | Observable<boolean> {
     const request = context.switchToHttp().getRequest();
     const user = request.user;
-    if (user['role'] === 1) {
+    if (user['role'] === RoleID.Admin) {
       return true;
     } else {
       return false;
