@@ -4,8 +4,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/typeorm/entities/user.entity';
 import { Repository } from 'typeorm';
 import { comparePassword, encodePassword } from 'src/auth/bcrypt';
-import { UserLogin } from 'src/auth/types/user-login.interface';
 import { JwtService } from '@nestjs/jwt';
+import { UserRole } from 'src/auth/types/user-role.interface';
 
 @Injectable()
 export class AuthService {
@@ -26,8 +26,8 @@ export class AuthService {
     return null;
   }
 
-  async login(user: any) {
-    const payload = { email: user.email, id: user.id, role: user.role_id };
+  async login(user: UserRole) {
+    const payload = { email: user.email, id: user.id, role_id: user.role_id };
     const access_token = this.jwtService.sign(payload);
     const { password, ...userInfo } = user;
     return {
