@@ -31,13 +31,13 @@ export class VaccinationSitesController {
   }
 
   @UseGuards(JwtAuthGuard, RoleGuard)
-  @Post('/creates')
+  @Post()
   @UsePipes(ValidationPipe)
   async create(@Body() createVaccinationSiteDto: VaccinationSiteDto) {
     return await this.vaccinationSitesService.create(createVaccinationSiteDto);
   }
 
-  @Patch('/updates/:id')
+  @Patch(':id')
   async update(
     @Param('id', ParseIntPipe) id: number,
     @Body() updateVaccinationSite: UpdateVaccinationSiteDto,
