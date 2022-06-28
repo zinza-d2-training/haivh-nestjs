@@ -13,7 +13,7 @@ export class RoleGuard implements CanActivate {
   ): boolean | Promise<boolean> | Observable<boolean> {
     const request = context.switchToHttp().getRequest();
     const user = request.user;
-    if (user['role_id'] === RoleID.Admin) {
+    if (user['role'] === RoleID.Admin) {
       return true;
     } else {
       return false;
