@@ -22,11 +22,16 @@ export class VaccinationSitesService {
   ) {}
 
   async getAll() {
-    return this.vaccinationSiteRepository.find();
+    return await this.vaccinationSiteRepository.find({
+      relations: ['ward', 'ward.district', 'ward.district.province'],
+    });
   }
 
   async getById(id: number) {
-    const site = await this.vaccinationSiteRepository.findOne({ id });
+    const site = await this.vaccinationSiteRepository.find({
+      where: { id },
+      relations: ['ward', 'ward.district', 'ward.district.province'],
+    });
     if (site) {
       return site;
     } else {
