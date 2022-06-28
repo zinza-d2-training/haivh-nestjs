@@ -9,6 +9,7 @@ import { ConsoleModule } from '@squareboat/nest-console';
 import { AuthModule } from './auth/auth.module';
 import { SubdivisionsModule } from './subdivisions/subdivisions.module';
 import { ForgotPassModule } from './forgot_pass/forgot_pass.module';
+import { VaccinationSitesModule } from './vaccination_sites/vaccination_sites.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { ForgotPassModule } from './forgot_pass/forgot_pass.module';
     AuthModule,
     SubdivisionsModule,
     ForgotPassModule,
+    VaccinationSitesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
