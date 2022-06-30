@@ -3,9 +3,11 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Role } from './role.entity';
+import { VaccineRegistration } from './vaccine_registrations';
 import { Ward } from './ward.entity';
 @Entity('users')
 export class User {
@@ -65,4 +67,10 @@ export class User {
   })
   @JoinColumn({ name: 'role_id' })
   role: Role;
+
+  @OneToMany(
+    () => VaccineRegistration,
+    (vaccineRegistration) => vaccineRegistration.user,
+  )
+  vaccine_registrations: VaccineRegistration[];
 }
