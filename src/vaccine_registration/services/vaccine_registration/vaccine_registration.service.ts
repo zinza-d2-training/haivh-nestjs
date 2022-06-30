@@ -4,6 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { VaccineRegistration } from 'src/typeorm/entities/vaccine_registrations';
 import { VaccineRegistrationDto } from 'src/vaccine_registration/dto/vaccine-registration.dto';
 import { Repository } from 'typeorm';
+import { RoleID } from 'src/vaccination_sites/role.guard';
 
 @Injectable()
 export class VaccineRegistrationService {
@@ -13,7 +14,7 @@ export class VaccineRegistrationService {
   ) {}
 
   async getAll(id: number, role: number) {
-    if (role === 1) {
+    if (role === RoleID.Admin) {
       return this.vaccineRegistrationRepository.find();
     } else {
       return await this.vaccineRegistrationRepository.find({
