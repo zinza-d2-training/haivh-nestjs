@@ -11,6 +11,7 @@ import { SubdivisionsModule } from './subdivisions/subdivisions.module';
 import { ForgotPassModule } from './forgot_pass/forgot_pass.module';
 import { VaccinationSitesModule } from './vaccination_sites/vaccination_sites.module';
 import { VaccineRegistrationModule } from './vaccine_registration/vaccine_registration.module';
+import { GroupModule } from './group/group.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { VaccineRegistrationModule } from './vaccine_registration/vaccine_regist
     ForgotPassModule,
     VaccinationSitesModule,
     VaccineRegistrationModule,
+    GroupModule,
   ],
   controllers: [AppController],
   providers: [AppService],
