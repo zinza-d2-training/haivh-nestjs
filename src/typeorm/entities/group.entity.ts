@@ -7,6 +7,9 @@ export class Group {
   id: number;
 
   @Column()
+  name: string;
+
+  @Column()
   description: string;
 
   @Column({
