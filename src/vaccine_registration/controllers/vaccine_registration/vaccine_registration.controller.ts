@@ -14,9 +14,9 @@ import {
 } from '@nestjs/common';
 import { VaccineRegistrationDto } from 'src/vaccine_registration/dto/vaccine-registration.dto';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
-import { UserRoleGuard } from 'src/vaccine_registration/user-role.guard';
-import { GetUser } from 'src/vaccine_registration/get-user.decorators';
-import { RoleGuard } from 'src/vaccination_sites/role.guard';
+import { VerifyUserGuard } from 'src/custom/verify-user.guard';
+import { GetUser } from 'src/custom/get-user.decorators';
+import { AdminRoleGuard } from 'src/custom/admin-role.guard';
 
 @Controller('vaccine-registrations')
 export class VaccineRegistrationController {
@@ -28,7 +28,7 @@ export class VaccineRegistrationController {
     return await this.vaccineRegistrationService.getAll(id, role);
   }
 
-  @UseGuards(JwtAuthGuard, UserRoleGuard)
+  @UseGuards(JwtAuthGuard, VerifyUserGuard)
   @Post()
   @UsePipes(ValidationPipe)
   async create(@Body() createVaccineRegistrationDto: VaccineRegistrationDto) {
@@ -42,7 +42,7 @@ export class VaccineRegistrationController {
     return this.vaccineRegistrationService.getById(id);
   }
 
-  @UseGuards(JwtAuthGuard, RoleGuard)
+  @UseGuards(JwtAuthGuard, AdminRoleGuard)
   @Patch(':id')
   async update(
     @Param('id', ParseIntPipe) id: number,

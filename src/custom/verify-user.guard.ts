@@ -1,19 +1,15 @@
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { Observable } from 'rxjs';
 
-export enum RoleID {
-  Admin = 1,
-  User = 2,
-}
-
 @Injectable()
-export class RoleGuard implements CanActivate {
+export class VerifyUserGuard implements CanActivate {
   canActivate(
     context: ExecutionContext,
   ): boolean | Promise<boolean> | Observable<boolean> {
     const request = context.switchToHttp().getRequest();
+    const bodyUserId = request.body.user_id;
     const user = request.user;
-    if (user['role'] === RoleID.Admin) {
+    if (bodyUserId === user.id) {
       return true;
     } else {
       return false;

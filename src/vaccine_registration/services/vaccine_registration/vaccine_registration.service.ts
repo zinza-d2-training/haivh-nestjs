@@ -4,7 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { VaccineRegistration } from 'src/typeorm/entities/vaccine_registrations';
 import { VaccineRegistrationDto } from 'src/vaccine_registration/dto/vaccine-registration.dto';
 import { Repository } from 'typeorm';
-import { RoleID } from 'src/vaccination_sites/role.guard';
+import { RoleID } from 'src/custom/role.enum';
 
 @Injectable()
 export class VaccineRegistrationService {
