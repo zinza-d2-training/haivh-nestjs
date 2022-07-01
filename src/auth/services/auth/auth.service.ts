@@ -16,7 +16,10 @@ export class AuthService {
   ) {}
 
   async validateUser(email: string, password: string) {
-    const user = await this.userRepository.findOne({ email });
+    const user = await this.userRepository.findOne({
+      where: { email },
+      relations: ['ward', 'ward.district', 'ward.district.province'],
+    });
     if (user) {
       const match = comparePassword(password, user.password);
       if (match) {
