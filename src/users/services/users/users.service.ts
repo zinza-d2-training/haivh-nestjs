@@ -1,7 +1,13 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import {
+  HttpException,
+  HttpStatus,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { RoleID } from 'src/custom/role.enum';
 import { User } from 'src/typeorm/entities/user.entity';
-import { CreateUserDto } from 'src/users/dto/create-user.dto';
+import { UpdateUserDto } from 'src/users/dto/update-user.dto';
 import { Repository } from 'typeorm';
 
 @Injectable()
@@ -11,35 +17,52 @@ export class UsersService {
     private readonly userRepository: Repository<User>,
   ) {}
 
-  getAll() {
-    return this.userRepository.find();
+  async getAll() {
+    return await this.userRepository.find({
+      relations: ['ward', 'ward.district', 'ward.district.province'],
+    });
   }
 
-  // findUserByEmail(email: string) {
-  //   return this.userRepository.findOne({ email });
-  // }
+  async getById(id: number, user_id: number, role: number) {
+    if (role === RoleID.Admin) {
+      return await this.userRepository.findOne({
+        where: { id },
+        relations: ['ward', 'ward.district', 'ward.district.province'],
+      });
+    } else {
+      if (id === user_id) {
+        return await this.userRepository.findOne({
+          where: { id },
+          relations: ['ward', 'ward.district', 'ward.district.province'],
+        });
+      } else {
+        throw new UnauthorizedException('You not have permission', '403');
+      }
+    }
+  }
 
-  // async getById(id: number) {
-  //   const user = await this.userRepository.findOne({ where: { id } });
-  //   if (user) {
-  //     return user;
-  //   } else {
-  //     throw new HttpException('User not found', HttpStatus.BAD_REQUEST);
-  //   }
-  // }
-
-  // async create(createUserDto: CreateUserDto) {
-  //   const newUser = this.userRepository.create(createUserDto);
-  //   return await this.userRepository.save(newUser);
-  // }
-
-  // async update(id: number, data: Partial<CreateUserDto>) {
-  //   await this.userRepository.update({ id }, data);
-  //   return this.userRepository.find({ id });
-  // }
-
-  // async delete(id: number) {
-  //   await this.userRepository.delete({ id });
-  //   return await this.userRepository.find();
-  // }
+  async update(
+    id: number,
+    user_id: number,
+    role: number,
+    updateUserDto: UpdateUserDto,
+  ) {
+    if (role === RoleID.Admin) {
+      await this.userRepository.update({ id }, updateUserDto);
+      return await this.userRepository.find({
+        where: { id },
+        relations: ['ward', 'ward.district', 'ward.district.province'],
+      });
+    } else {
+      if (id === user_id) {
+        await this.userRepository.update({ id }, updateUserDto);
+        return await this.userRepository.find({
+          where: { id },
+          relations: ['ward', 'ward.district', 'ward.district.province'],
+        });
+      } else {
+        throw new UnauthorizedException('You not have permission', '403');
+      }
+    }
+  }
 }

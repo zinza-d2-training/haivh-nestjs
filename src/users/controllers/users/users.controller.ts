@@ -7,41 +7,44 @@ import {
   ParseIntPipe,
   Patch,
   Post,
+  UseGuards,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
-import { CreateUserDto } from 'src/users/dto/create-user.dto';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { AdminRoleGuard } from 'src/custom/admin-role.guard';
+import { GetUser } from 'src/custom/get-user.decorators';
+import { UpdateUserDto } from 'src/users/dto/update-user.dto';
 import { UsersService } from 'src/users/services/users/users.service';
 
 @Controller('users')
 export class UsersController {
   constructor(private userService: UsersService) {}
+
+  @UseGuards(JwtAuthGuard, AdminRoleGuard)
   @Get()
-  getAll() {
-    return this.userService.getAll();
+  async getAll() {
+    return await this.userService.getAll();
   }
 
-  // @Get(':id')
-  // getById(@Param('id', ParseIntPipe) id: number) {
-  //   return this.userService.getById(id);
-  // }
+  @UseGuards(JwtAuthGuard)
+  @Get(':id')
+  getById(
+    @Param('id', ParseIntPipe) id: number,
+    @GetUser('id') user_id: number,
+    @GetUser('role') role: number,
+  ) {
+    return this.userService.getById(id, user_id, role);
+  }
 
-  // @Post('/create')
-  // @UsePipes(ValidationPipe)
-  // create(@Body() createUserDto: CreateUserDto) {
-  //   return this.userService.create(createUserDto);
-  // }
-
-  // @Patch('/update/:id')
-  // update(
-  //   @Param('id', ParseIntPipe) id: number,
-  //   @Body() updateUserDto: CreateUserDto,
-  // ) {
-  //   return this.userService.update(id, updateUserDto);
-  // }
-
-  // @Delete('/delete/:id')
-  // delete(@Param('id', ParseIntPipe) id: number) {
-  //   return this.userService.delete(id);
-  // }
+  @UseGuards(JwtAuthGuard)
+  @Patch(':id')
+  async update(
+    @Param('id', ParseIntPipe) id: number,
+    @GetUser('id') user_id: number,
+    @GetUser('role') role: number,
+    @Body() updateUserDto: UpdateUserDto,
+  ) {
+    return this.userService.update(id, user_id, role, updateUserDto);
+  }
 }
