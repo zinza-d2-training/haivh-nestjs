@@ -13,7 +13,7 @@ import {
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { UpdateVaccinationSiteDto } from 'src/vaccination_sites/dto/update-site.dto';
 import { VaccinationSiteDto } from 'src/vaccination_sites/dto/vaccination-site.dto';
-import { RoleGuard } from 'src/vaccination_sites/role.guard';
+import { AdminRoleGuard } from 'src/custom/admin-role.guard';
 import { VaccinationSitesService } from 'src/vaccination_sites/services/vaccination_sites/vaccination_sites.service';
 
 @Controller('vaccination-sites')
@@ -30,7 +30,7 @@ export class VaccinationSitesController {
     return this.vaccinationSitesService.getById(id);
   }
 
-  @UseGuards(JwtAuthGuard, RoleGuard)
+  @UseGuards(JwtAuthGuard, AdminRoleGuard)
   @Post()
   @UsePipes(ValidationPipe)
   async create(@Body() createVaccinationSiteDto: VaccinationSiteDto) {
