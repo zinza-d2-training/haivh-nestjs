@@ -12,6 +12,7 @@ import { ForgotPassModule } from './forgot_pass/forgot_pass.module';
 import { VaccinationSitesModule } from './vaccination_sites/vaccination_sites.module';
 import { VaccineRegistrationModule } from './vaccine_registration/vaccine_registration.module';
 import { GroupModule } from './group/group.module';
+import { DocumentsModule } from './documents/documents.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { GroupModule } from './group/group.module';
     VaccinationSitesModule,
     VaccineRegistrationModule,
     GroupModule,
+    DocumentsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
