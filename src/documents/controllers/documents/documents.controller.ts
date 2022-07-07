@@ -4,6 +4,7 @@ import {
   Get,
   Param,
   ParseIntPipe,
+  Patch,
   Post,
   Req,
   Request,
@@ -21,6 +22,7 @@ import { join } from 'path';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { AdminRoleGuard } from 'src/custom/admin-role.guard';
 import { Observable, of } from 'rxjs';
+import { UpdateDocumentDto } from 'src/documents/dto/update-document.dto';
 
 const storage = {
   storage: diskStorage({
@@ -52,6 +54,15 @@ export class DocumentsController {
     @Body('description') description: string,
   ) {
     return this.documentService.upload(file, description);
+  }
+
+  @UseGuards(JwtAuthGuard, AdminRoleGuard)
+  @Patch(':id')
+  async update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updateDocumentDto: UpdateDocumentDto,
+  ) {
+    return this.documentService.update(id, updateDocumentDto);
   }
 
   @Get(':id')
