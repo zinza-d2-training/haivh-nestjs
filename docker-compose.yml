@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: covid19-clone-mysql
+    restart: always
+    volumes:
+      - covid19-clone-mysql-vol:/var/lib/mysql
+    cap_add:
+      - SYS_NICE
+    networks:
+      - covid19-clone-network
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
+    ports:
+      - ${MYSQL_HOST_PORT}:${MYSQL_PORT}
+
+  app:
+    container_name: covid19-clone-app
+    networks:
+      - covid19-clone-network
+    tty: true
+    stdin_open: true
+    build: ./docker/app
+    ports:
+      - ${NEST_HOST_PORT}:${PORT}
+    depends_on:
+      - mysql
+    volumes:
+      - .:/app
+
+volumes:
+  covid19-clone-mysql-vol:
+
+networks:
+  covid19-clone-network:
+    driver: bridge
